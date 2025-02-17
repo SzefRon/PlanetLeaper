@@ -2,6 +2,11 @@
 
 #include <sstream>
 
+#define GLM_FORCE_SSE42
+#define GLM_FORCE_ALIGNED
+
+#include "glm/glm.hpp"
+
 #include "world/World.hpp"
 #include "render/Camera.hpp"
 #include "render/Colors.hpp"
