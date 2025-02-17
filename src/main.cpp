@@ -1,6 +1,7 @@
-#include <iostream>
+#include "Game.hpp"
 
 int main()
 {
-    std::cout << "sup, dude" << std::endl;
+    Game game;
+    game.run();
 }
