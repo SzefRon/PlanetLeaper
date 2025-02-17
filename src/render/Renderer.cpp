@@ -8,7 +8,7 @@ Renderer::Renderer(unsigned int size_x, unsigned int size_y)
 void Renderer::resize(unsigned int new_size_x, unsigned int new_size_y)
 {
     if (view_pos_world != nullptr) {
-        for (int i = 0; i < size_y; i++) {
+        for (unsigned int i = 0; i < size_y; i++) {
             delete[] view_pos_world[i];
         }
         delete[] view_pos_world;
@@ -21,7 +21,7 @@ void Renderer::resize(unsigned int new_size_x, unsigned int new_size_y)
     half_y = size_y * 0.5f;
 
     view_pos_world = new BlockType *[size_y];
-    for (int i = 0; i < size_y; i++) {
+    for (unsigned int i = 0; i < size_y; i++) {
         view_pos_world[i] = new BlockType[size_x];
     }
 }
@@ -38,17 +38,17 @@ void Renderer::render(const World &world, const Camera &camera)
     view = glm::translate(view, {-half_x, -half_y, 0.0f});
     view = glm::translate(view, {camera.position.x, camera.position.y, 0.0f});
 
-    for (int y = 0; y < size_y; y++) {
+    for (unsigned int y = 0; y < size_y; y++) {
         std::fill(view_pos_world[y], view_pos_world[y] + size_x, BlockType::AIR);
     }
 
     for (auto &[pos, block] : world_grid) {
         auto view_pos = view * glm::vec4(pos.x, pos.y, 0.0f, 1.0f);
 
-        int f_x = glm::floor(view_pos.x);
-        int f_y = glm::floor(view_pos.y);
-        int r_x = glm::round(view_pos.x);
-        int r_y = glm::round(view_pos.y);
+        int f_x = static_cast<int>(glm::floor(view_pos.x));
+        int f_y = static_cast<int>(glm::floor(view_pos.y));
+        int r_x = static_cast<int>(glm::round(view_pos.x));
+        int r_y = static_cast<int>(glm::round(view_pos.y));
 
         if (on_screen(f_x, f_y))
             view_pos_world[f_y][f_x] = block.block_type;
@@ -63,8 +63,8 @@ void Renderer::render(const World &world, const Camera &camera)
     std::string result;
     result.reserve(size_y * (size_x + 1) * 5);
 
-    for (int y = 0; y < size_y; y++) {
-        for (int x = 0; x < size_x; x++) {
+    for (unsigned int y = 0; y < size_y; y++) {
+        for (unsigned int x = 0; x < size_x; x++) {
             auto block_type = view_pos_world[y][x];
             auto &[block_char, block_color] = Render::block_render_details.at(block_type);
             result += block_color;
