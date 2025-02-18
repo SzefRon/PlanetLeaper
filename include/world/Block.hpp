@@ -8,6 +8,7 @@ struct Block
 {
 public:
     Block() = default;
+    Block(BlockType block_type);
     ~Block() = default;
     BlockType block_type;
 };
