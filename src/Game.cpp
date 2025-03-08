@@ -10,10 +10,10 @@ Game::Game()
 
     world.entities.insert(&player);
 
-    camera.position = {0, -90};
+    camera.position = {30, -90};
     camera.scale = 1.0f;
 
-    player.pos = {10.0f, -105.0f};
+    player.pos = {50.0f, -110.0f};
 
     printf("\033[?25l");
 }

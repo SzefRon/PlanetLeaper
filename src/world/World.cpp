@@ -3,18 +3,35 @@
 void World::update_entities(float dt)
 {
     for (auto &entity : entities) {
+        update_entity_gravity(entity);
+
         entity->update_next_pos(dt);
 
         bool collision_happened = false;
         if (glm::distance(entity->pos, entity->next_pos) > collision_step) {
             collision_happened = interpolate_collision(entity);
         }
-        
+
         if (!collision_happened) {
             entity->update_pos();
             check_collision_step(entity);
         }
     }
+}
+
+void World::update_entity_gravity(Entity *const &entity)
+{
+    glm::vec2 final_gravity(0.0f);
+
+    for (auto &gravity_center : gravity_centers) {
+        float distance = glm::distance(gravity_center.pos, entity->pos);
+        if (distance == 0.0f) continue;
+
+        float force = 100.0f * gravity_center.power / (distance * distance);
+        final_gravity += glm::normalize(gravity_center.pos - entity->pos) * force;
+    }
+
+    entity->gravity = final_gravity;
 }
 
 bool World::interpolate_collision(Entity *const &entity)
@@ -94,6 +111,13 @@ void World::generate_planet(glm::ivec2 center_pos, int radius, BlockType block_t
                 world_grid[pos] = block;
             }
         }
+    }
+    if (block_type == BlockType::CORE) {
+        GravityCenter gravity_center;
+        gravity_center.pos = center_pos;
+        gravity_center.power = glm::pi<float>() * radius * radius;
+        
+        gravity_centers.push_back(gravity_center);
     }
 }
 
