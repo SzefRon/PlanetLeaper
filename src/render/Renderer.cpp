@@ -42,6 +42,14 @@ void Renderer::render(const World &world, const Camera &camera)
                 block_type = BlockType::AIR;
             }
 
+            for (auto &entity : world.entities) {
+                BlockType entity_block_type = entity->render_condition(pos_sample);
+                if (entity_block_type != BlockType::AIR) {
+                    block_type = entity_block_type;
+                    break;
+                }
+            }
+
             auto &[block_char, block_color] = Render::block_render_details.at(block_type);
             
             int idx = y * size_x + x;

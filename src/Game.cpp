@@ -8,8 +8,12 @@ Game::Game()
     world.generate_planet({0, 0}, 90, BlockType::STONE);
     world.generate_planet({0, 0}, 10, BlockType::CORE);
 
+    world.entities.insert(&player);
+
     camera.position = {0, -90};
     camera.scale = 1.0f;
+
+    player.pos = {10.0f, -105.0f};
 
     printf("\033[?25l");
 }
@@ -27,11 +31,13 @@ void Game::run()
         float dt = delta_time.count();
         t += dt;
 
+        world.update(dt);
+
         renderer.render(world, camera);
 
         renderer.display();
 
         float fps = 1.0f / dt;
-        printf("\n\033[38;5;255m%f %zu            ", fps, world.world_grid.size());
+        printf("\n\033[38;5;255m%f %f %f            ", fps, player.velocity.x, player.velocity.y);
     }
 }

@@ -1,17 +1,29 @@
 #pragma once
 
 #include <unordered_map>
+#include <unordered_set>
+#include <algorithm>
 
 #define GLM_ENABLE_EXPERIMENTAL
 #include "glm/glm.hpp"
 #include "glm/gtx/hash.hpp"
 
 #include "Block.hpp"
+#include "entity/Entity.hpp"
 
 class World
 {
+private:
+    const float collision_step = 0.5f;
+    void update_entities(float dt);
+    bool interpolate_collision(Entity *const &entity);
+    bool check_collision_step(Entity *const &entity);
+
 public:
     std::unordered_map<glm::ivec2, Block> world_grid;
+    std::unordered_set<Entity *> entities;
 
     void generate_planet(glm::ivec2 center_pos, int radius, BlockType block_type);
+
+    void update(float dt);
 };
