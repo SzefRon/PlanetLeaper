@@ -95,10 +95,7 @@ bool World::check_collision_step(Entity *const &entity)
     }
 
     if (glm::length(sep_vec) != 0.0f) {
-        glm::vec2 velocity_normal = glm::dot(entity->velocity, sep_vec) * sep_vec;
-        glm::vec2 velocity_tangent = entity->velocity - velocity_normal;
-
-        entity->velocity = velocity_tangent;
+        entity->velocity += sep_vec;
     }
 
     entity->pos += sep_vec;
