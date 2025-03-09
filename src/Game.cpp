@@ -40,7 +40,7 @@ void Game::run()
         camera.follow(player.pos, dt);
 
         float angle = glm::atan(player.gravity.y, player.gravity.x) - glm::half_pi<float>();
-        camera.adapt_rotation(angle);
+        camera.adapt_rotation(angle, dt);
 
         renderer.render(world, camera);
         renderer.display();
