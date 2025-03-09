@@ -31,7 +31,8 @@ void Renderer::render(const World &world, const Camera &camera)
 
     for (int y = 0; y < size_y; y++) {
         for (int x = 0; x < size_x; x++) {
-            glm::ivec2 pos_sample = glm::round(view * glm::vec4(x, y, 0.0f, 1.0f));
+            glm::vec2 pos = view * glm::vec4(x, y, 0.0f, 1.0f);
+            glm::ivec2 pos_sample = glm::round(pos);
 
             BlockType block_type;
 
@@ -43,7 +44,7 @@ void Renderer::render(const World &world, const Camera &camera)
             }
 
             for (auto &entity : world.entities) {
-                BlockType entity_block_type = entity->render_condition(pos_sample);
+                BlockType entity_block_type = entity->render_condition(pos);
                 if (entity_block_type != BlockType::AIR) {
                     block_type = entity_block_type;
                     break;
