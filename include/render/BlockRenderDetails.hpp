@@ -14,7 +14,8 @@ const std::unordered_map<BlockType, std::pair<char, const char*>> block_render_d
     {STONE, {'#', Colors::Gray}},
     {DIRT, {'@', Colors::Brown}},
     {GRASS, {'%', Colors::Green}},
-    {CORE, {(char)(219), Colors::Red}}
+    {CORE, {(char)(219), Colors::Red}},
+    {PLAYER, {(char)(219), Colors::White}}
 };
 
 }

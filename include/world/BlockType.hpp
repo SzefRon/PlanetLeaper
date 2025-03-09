@@ -10,5 +10,6 @@ enum BlockType
     STONE,
     DIRT,
     GRASS,
-    CORE
+    CORE,
+    PLAYER
 };

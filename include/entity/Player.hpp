@@ -6,5 +6,7 @@
 
 class Player : public Entity
 {
+public:
+    Player();
     BlockType render_condition(glm::vec2 pixel_pos) override;
 };
