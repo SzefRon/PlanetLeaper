@@ -9,12 +9,12 @@ void World::update_entities(float dt)
 
         bool collision_happened = false;
         if (glm::distance(entity->pos, entity->next_pos) > collision_step) {
-            collision_happened = interpolate_collision(entity);
+            collision_happened = interpolate_collision(entity, dt);
         }
 
         if (!collision_happened) {
             entity->update_pos();
-            check_collision_step(entity);
+            check_collision_step(entity, dt);
         }
     }
 }
@@ -34,7 +34,7 @@ void World::update_entity_gravity(Entity *const &entity)
     entity->gravity = final_gravity;
 }
 
-bool World::interpolate_collision(Entity *const &entity)
+bool World::interpolate_collision(Entity *const &entity, float dt)
 {
     float dist = glm::distance(entity->next_pos, entity->pos);
     int div = glm::ceil(dist / collision_step);
@@ -43,7 +43,7 @@ bool World::interpolate_collision(Entity *const &entity)
     int no_steps = div - 1;
     for (int steps = 0; steps < no_steps; steps++) {
         entity->pos += d_pos;
-        if (check_collision_step(entity)) {
+        if (check_collision_step(entity, dt)) {
             return true;
         }
     }
@@ -51,7 +51,7 @@ bool World::interpolate_collision(Entity *const &entity)
     return false;
 }
 
-bool World::check_collision_step(Entity *const &entity)
+bool World::check_collision_step(Entity *const &entity, float dt)
 {
     glm::ivec2 center = glm::floor(entity->pos);
     int range = glm::ceil(entity->collision_size);
@@ -74,7 +74,7 @@ bool World::check_collision_step(Entity *const &entity)
         return glm::distance(entity->pos, glm::vec2(a)) < glm::distance(entity->pos, glm::vec2(b));
     });
 
-    glm::vec2 sep_vec = {0.0f, 0.0f};
+    glm::vec2 final_sep_vec = {0.0f, 0.0f};
 
     bool collision_happened = false;
 
@@ -91,14 +91,14 @@ bool World::check_collision_step(Entity *const &entity)
         collision_happened = true;
 
         float sep = entity->collision_size - diff_len;
-        sep_vec += glm::normalize(diff) * sep;
+        glm::vec2 sep_vec = glm::normalize(diff) * sep;
+        final_sep_vec += sep_vec;
+        entity->pos += sep_vec;
     }
 
-    if (glm::length(sep_vec) != 0.0f) {
-        entity->velocity += sep_vec;
+    if (glm::length(final_sep_vec) != 0.0f) {
+        entity->velocity += final_sep_vec / dt;
     }
-
-    entity->pos += sep_vec;
 
     return collision_happened;
 }
@@ -118,7 +118,7 @@ void World::generate_planet(glm::ivec2 center_pos, int radius, BlockType block_t
     }
     if (block_type == BlockType::CORE) {
         GravityCenter gravity_center;
-        gravity_center.pos = center_pos;
+        gravity_center.pos = glm::vec2(center_pos) + glm::vec2(0.5f);
         gravity_center.power = glm::pi<float>() * radius * radius;
         
         gravity_centers.push_back(gravity_center);

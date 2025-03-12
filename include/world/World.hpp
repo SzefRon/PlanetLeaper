@@ -18,8 +18,8 @@ private:
     const float collision_step = 0.5f;
     void update_entities(float dt);
     void update_entity_gravity(Entity *const &entity);
-    bool interpolate_collision(Entity *const &entity);
-    bool check_collision_step(Entity *const &entity);
+    bool interpolate_collision(Entity *const &entity, float dt);
+    bool check_collision_step(Entity *const &entity, float dt);
 
 public:
     std::unordered_map<glm::ivec2, Block> world_grid;

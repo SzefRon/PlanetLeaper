@@ -32,7 +32,7 @@ void Renderer::render(const World &world, const Camera &camera)
     for (int y = 0; y < size_y; y++) {
         for (int x = 0; x < size_x; x++) {
             glm::vec2 pos = view * glm::vec4(x, y, 0.0f, 1.0f);
-            glm::ivec2 pos_sample = glm::round(pos);
+            glm::ivec2 pos_sample = glm::floor(pos);
 
             BlockType block_type;
 
