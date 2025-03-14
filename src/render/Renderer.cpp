@@ -3,6 +3,9 @@
 Renderer::Renderer(unsigned int size_x, unsigned int size_y)
 {
     resize(size_x, size_y);
+
+    // Stop displaying caret
+    printf("\033[?25l");
 }
 
 void Renderer::resize(unsigned int new_size_x, unsigned int new_size_y)

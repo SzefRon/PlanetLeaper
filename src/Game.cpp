@@ -1,13 +1,13 @@
 #include "Game.hpp"
 
 Game::Game()
-    : renderer(400, 190)
+    : renderer(300, 150)
 {
     // world.generate_planet({0, 0}, 100, BlockType::GRASS);
     // world.generate_planet({0, 0}, 98, BlockType::DIRT);
     
-    world.generate_planet({0, 0}, 30, BlockType::STONE);
-    world.generate_planet({0, 0}, 15, BlockType::CORE);
+    world.generate_planet({0, 0}, 50, BlockType::STONE);
+    world.generate_planet({0, 0}, 20, BlockType::CORE);
     // world.world_grid.insert({{-1, -17}, Block(BlockType::STONE)});
     // world.world_grid.insert({{0, -17}, Block(BlockType::STONE)});
     // world.world_grid.insert({{1, -17}, Block(BlockType::STONE)});
@@ -17,13 +17,11 @@ Game::Game()
 
     world.entities.insert(&player);
 
-    camera.position = {0.0f, -10.0f};
-    camera.scale = 0.5f;
+    camera.position = {0.5f, -59.5f};
+    camera.scale = 0.25f;
 
     player.pos = {0.5f, -59.5f};
-    player.velocity = {30.0f, 0.0f};
-
-    printf("\033[?25l");
+    player.velocity = {40.0f, 0.0f};
 }
 
 void Game::run()
@@ -39,6 +37,8 @@ void Game::run()
         float dt = delta_time.count();
         dt = glm::clamp(dt, 0.0f, 1.0f / 10.0f);
         t += dt;
+
+        // char a = getchar();
 
         world.update(dt);
 

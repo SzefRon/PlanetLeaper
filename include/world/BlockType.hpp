@@ -11,5 +11,6 @@ enum BlockType
     DIRT,
     GRASS,
     CORE,
-    PLAYER
+    PLAYER_INSIDE,
+    PLAYER_BORDER
 };
