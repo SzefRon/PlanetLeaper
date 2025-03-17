@@ -5,6 +5,7 @@
 #include "world/World.hpp"
 #include "render/Renderer.hpp"
 #include "entity/Player.hpp"
+#include "input/InputManager.hpp"
 
 class Game
 {

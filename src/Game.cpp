@@ -1,8 +1,10 @@
 #include "Game.hpp"
 
 Game::Game()
-    : renderer(300, 150)
+    : renderer(200, 100)
 {
+    InputManager::initialize();
+
     // world.generate_planet({0, 0}, 100, BlockType::GRASS);
     // world.generate_planet({0, 0}, 98, BlockType::DIRT);
     
@@ -20,8 +22,8 @@ Game::Game()
     camera.position = {0.5f, -59.5f};
     camera.scale = 0.25f;
 
-    player.pos = {0.5f, -59.5f};
-    player.velocity = {40.0f, 0.0f};
+    player.pos = {-0.5f, -59.5f};
+    player.velocity = {0.0f, 0.0f};
 }
 
 void Game::run()
@@ -38,14 +40,16 @@ void Game::run()
         dt = glm::clamp(dt, 0.0f, 1.0f / 10.0f);
         t += dt;
 
-        // char a = getchar();
+        InputManager::update();
 
         world.update(dt);
 
         camera.follow(player.pos, dt);
 
-        float angle = glm::atan(player.gravity.y, player.gravity.x) - glm::half_pi<float>();
-        camera.adapt_rotation(angle, dt);
+        if (glm::length(player.gravity) != 0.0f) {
+            float angle = glm::atan(player.gravity.y, player.gravity.x) - glm::half_pi<float>();
+            camera.adapt_rotation(angle, dt);
+        }
 
         renderer.render(world, camera);
         renderer.display();
