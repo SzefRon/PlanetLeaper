@@ -21,5 +21,5 @@ public:
 
     void update_next_pos(float dt);
     void update_pos();
-    virtual void update() = 0;
+    virtual void update(float dt) = 0;
 };

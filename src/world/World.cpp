@@ -19,7 +19,7 @@ void World::update_entities(float dt)
             check_collision_step(entity, dt);
         }
 
-        entity->update();
+        entity->update(dt);
     }
 }
 

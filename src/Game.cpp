@@ -8,21 +8,21 @@ Game::Game()
     // world.generate_planet({0, 0}, 100, BlockType::GRASS);
     // world.generate_planet({0, 0}, 98, BlockType::DIRT);
     
-    world.generate_planet({0, 0}, 50, BlockType::STONE);
-    world.generate_planet({0, 0}, 20, BlockType::CORE);
+    world.generate_planet({0, 0}, 8, BlockType::STONE);
+    world.generate_planet({0, 0}, 3, BlockType::CORE);
     // world.world_grid.insert({{-1, -17}, Block(BlockType::STONE)});
     // world.world_grid.insert({{0, -17}, Block(BlockType::STONE)});
     // world.world_grid.insert({{1, -17}, Block(BlockType::STONE)});
 
-    // world.generate_planet({-20, -20}, 8, BlockType::STONE);
-    // world.generate_planet({-20, -20}, 3, BlockType::CORE);
+    world.generate_planet({-20, -20}, 8, BlockType::STONE);
+    world.generate_planet({-20, -20}, 3, BlockType::CORE);
 
     world.entities.insert(&player);
 
-    camera.position = {0.5f, -59.5f};
+    camera.position = {0.5f, -12.5f};
     camera.scale = 0.25f;
 
-    player.pos = {-0.5f, -59.5f};
+    player.pos = {0.5f, -12.5f};
     player.velocity = {0.0f, 0.0f};
 }
 
