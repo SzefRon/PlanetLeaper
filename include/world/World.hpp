@@ -20,6 +20,8 @@ private:
     void update_entity_gravity(Entity *const &entity);
     bool interpolate_collision(Entity *const &entity, float dt);
     bool check_collision_step(Entity *const &entity, float dt);
+    
+    const float on_ground_sensitivity = glm::cos(glm::radians(45.0f));
 
 public:
     std::unordered_map<glm::ivec2, Block> world_grid;

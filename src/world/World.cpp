@@ -98,6 +98,16 @@ bool World::check_collision_step(Entity *const &entity, float dt)
 
     if (glm::length(final_sep_vec) != 0.0f) {
         entity->velocity += final_sep_vec / dt;
+
+        if (glm::dot(entity->gravity, final_sep_vec) <= on_ground_sensitivity) {
+            entity->on_ground = true;
+        }
+        else {
+            entity->on_ground = false;
+        }
+    }
+    else {
+        entity->on_ground = false;
     }
 
     return collision_happened;
