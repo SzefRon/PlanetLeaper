@@ -21,7 +21,10 @@ void Player::on_input_change(Action action, bool state)
 {
     switch(action) {
         case Action::JUMP: {
-            velocity.y = state ? -10.0f : velocity.y;
+            if (!state || !on_ground) break;
+            glm::vec2 jump_dir = -glm::normalize(gravity);
+            velocity += jump_strength * jump_dir;
+            break;
         }
     }
 }

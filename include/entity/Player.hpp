@@ -10,6 +10,7 @@ class Player : public Entity, public InputObserver
 {
 private:
     float border_size = 1.0f;
+    float jump_strength = 20.0f;
 public:
     Player();
     BlockType render_condition(glm::vec2 pixel_pos) override;
