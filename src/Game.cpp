@@ -37,7 +37,7 @@ void Game::run()
         std::chrono::duration<float> delta_time = current_time - last_time;
         last_time = current_time;
         float dt = delta_time.count();
-        dt = glm::clamp(dt, 0.0f, 1.0f / 10.0f);
+        dt = glm::clamp(dt, 0.0f, 1.0f / 60.0f);
         t += dt;
 
         InputManager::update();
@@ -55,6 +55,6 @@ void Game::run()
         renderer.display();
 
         float fps = 1.0f / dt;
-        printf("\n\033[38;5;255m%f %d            ", fps, (int)player.on_ground);
+        printf("\n\033[38;5;255m%f %d %f %f            ", fps, (int)player.on_ground, player.velocity.x, player.velocity.y);
     }
 }

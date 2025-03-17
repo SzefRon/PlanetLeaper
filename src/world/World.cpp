@@ -3,6 +3,8 @@
 void World::update_entities(float dt)
 {
     for (auto &entity : entities) {
+        entity->on_ground = entity->buffer_on_ground;
+
         update_entity_gravity(entity);
 
         entity->update_next_pos(dt);
@@ -16,6 +18,8 @@ void World::update_entities(float dt)
             entity->update_pos();
             check_collision_step(entity, dt);
         }
+
+        entity->update();
     }
 }
 
@@ -100,14 +104,14 @@ bool World::check_collision_step(Entity *const &entity, float dt)
         entity->velocity += final_sep_vec / dt;
 
         if (glm::dot(entity->gravity, final_sep_vec) <= on_ground_sensitivity) {
-            entity->on_ground = true;
+            entity->buffer_on_ground = true;
         }
         else {
-            entity->on_ground = false;
+            entity->buffer_on_ground = false;
         }
     }
     else {
-        entity->on_ground = false;
+        entity->buffer_on_ground = false;
     }
 
     return collision_happened;

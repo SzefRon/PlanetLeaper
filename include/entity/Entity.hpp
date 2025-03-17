@@ -12,6 +12,7 @@ public:
     glm::vec2 velocity = {0.0f, 0.0f};
     glm::vec2 gravity = {0.0f, 0.0f};
     
+    bool buffer_on_ground = false;
     bool on_ground = false;
 
     float collision_size = 1.0f;
@@ -20,4 +21,5 @@ public:
 
     void update_next_pos(float dt);
     void update_pos();
+    virtual void update() = 0;
 };
