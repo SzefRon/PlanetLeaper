@@ -2,7 +2,7 @@
 
 Player::Player()
 {
-    collision_size = 3.0f;
+    collision_size = 1.5f;
     InputManager::subscribe(this);
 }
 

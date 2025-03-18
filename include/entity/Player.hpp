@@ -10,7 +10,7 @@
 class Player : public Entity, public InputObserver
 {
 private:
-    float border_size = 1.0f;
+    float border_size = 0.5f;
 
     float jump_strength = 20.0f;
     bool buffer_jump = false;
