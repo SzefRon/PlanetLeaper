@@ -13,9 +13,21 @@ void Player::update(float dt)
     }
 
     float v_final = (v_left + v_right) * speed;
-    float lerp_coeff = v_final == 0.0f ? lerp_stay : lerp_move;
+    float lerp_coeff;
+
+    if (v_final == 0.0f)
+        lerp_coeff = lerp_stay;
+    else
+        lerp_coeff = lerp_move;
+
+    if (!on_ground)
+        lerp_coeff = lerp_air;
 
     glm::vec2 v_rotated = Math::get_in_new_system(velocity, gravity);
+
+    if (v_rotated.y > 0.0f) {
+        gravity_multiplier = gravity_high;
+    }
 
     float v_follow = glm::mix(v_rotated.x, v_final, lerp_coeff * dt);
     v_rotated.x = v_follow;
@@ -55,6 +67,7 @@ void Player::check_jump(bool key_state)
     if (key_state && !on_ground) buffer_jump = true;
     if (!key_state) {
         buffer_jump = false;
+        gravity_multiplier = gravity_high;
         return;
     }
     if (!on_ground)
@@ -65,6 +78,7 @@ void Player::check_jump(bool key_state)
 void Player::jump()
 {
     buffer_jump = false;
+    gravity_multiplier = gravity_low;
     glm::vec2 jump_dir = -glm::normalize(gravity);
     velocity += jump_strength * jump_dir;
 }

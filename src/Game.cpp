@@ -55,6 +55,6 @@ void Game::run()
         renderer.display();
 
         float fps = 1.0f / dt;
-        printf("\n\033[38;5;255m%f %d %f %f            ", fps, (int)player.on_ground, player.velocity.x, player.velocity.y);
+        printf("\n\033[38;5;255m%f %d %f            ", fps, (int)player.on_ground, player.gravity_multiplier);
     }
 }

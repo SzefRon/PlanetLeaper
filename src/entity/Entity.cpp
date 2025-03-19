@@ -2,7 +2,7 @@
 
 void Entity::update_next_pos(float dt)
 {
-    velocity += gravity * dt;
+    velocity += gravity * gravity_multiplier * dt;
     next_pos = pos + velocity * dt;
 }
 
